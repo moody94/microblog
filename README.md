@@ -1,6 +1,6 @@
 Microblog
 ===================
-[![Build Status](https://app.circleci.com/pipelines/github/moody94/microblog)](https://app.circleci.com/pipelines/github/moody94/microblog)
+[![CircleCI](https://circleci.com/gh/moody94/microblog.svg?style=svg)](https://app.circleci.com/pipelines/github/moody94/microblog)
 
 
 [![Join the chat at https://gitter.im/dbwebb-se/devops](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/dbwebb-se/devops?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
