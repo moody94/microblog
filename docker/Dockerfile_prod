@@ -1,0 +1,31 @@
+# image name is pyhhon and tag is 3.8_alpine
+FROM python:3.8-alpine
+# execut the command run  with new user microblog
+RUN adduser -D microblog
+# create a catalog to install the app in it
+WORKDIR /home/microblog
+
+# copy files from machine  to the container
+# (COPY . .) can be used to copy all the files 
+COPY app app
+COPY migrations migrations
+COPY requirements requirements
+COPY requirements.txt microblog.py boot_prod.sh ./
+
+RUN python -m venv .venv
+ENV FLASK_APP microblog.py
+# hadolint ignore=DL3013,DL3018
+RUN apk --no-cache add --virtual build-dependencies libffi-dev openssl-dev py-pip build-base \
+  && pip install --upgrade pip \
+  && pip install -r requirements.txt \
+  && apk del build-dependencies
+RUN .venv/bin/pip3 install -r requirements.txt
+
+RUN chmod +x boot_prod.sh
+
+RUN chown -R microblog:microblog ./
+USER microblog
+# port
+EXPOSE 5000
+# comands that should run when the contianer start
+ENTRYPOINT ["./boot_prod.sh"]
