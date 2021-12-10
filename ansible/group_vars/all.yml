@@ -1,13 +1,13 @@
 ---
 # Here you can add variables that will be available for all hosts.
 region: northeurope
-resource_group: <resource-id> # Change me
-domain_name: <domain> # Change me
+resource_group: DIDA-MUAB19-DV1617-H21-LP2 # 
+domain_name: microblogmoody.software # 
 
 root_user: azureuser
 
 vmtags:
-    StudentId: "<akronym>" # Change me
+    StudentId: "muab19" # 
 
 
-pub_ssh_key_location: '/home/<user>/.ssh/<key-name>.pub' # Change me, your local ssh key!
+pub_ssh_key_location: '/home/moody94/.ssh/ansible.pub' #

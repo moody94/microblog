@@ -1,0 +1,16 @@
+---
+root_password: $6$j8UItbHm2xy24Ywl$UdaYxvO66nUBL0tdgFdv4p6asEIlLT.3.TxSLLfJXTN9y742EfuVZv3qjXWT9FqtyNqESGaCP8IeyT1V/ZMrF1
+
+server_user: deploy
+server_user_password: $6$HBteWXrRVOugWOXz$rWvgLf7uGLouMYoBpfX/J3PF4HjRJZHVUKvkxBtlNZJUPGCr/6FJpWtUBwaG0IxDMn1MnbtFm8gTSTPsZyNBX0
+server_user_groups:
+    -   sudo
+
+pub_ssh_key_location: 
+    -   ~/.ssh/ansible.pub
+
+dbserver_password: secret
+
+admin_name: muab19@student.bth.se
+
+domain_name: microblogmoody.software

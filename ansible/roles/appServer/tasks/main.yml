@@ -1,0 +1,51 @@
+---
+-   name: Update apt-cache and Upgrade
+    apt:
+        force_apt_get: yes
+        update_cache: "True"
+        cache_valid_time: 3600
+        upgrade: yes
+
+-   name: install dependency
+    apt:
+        force_apt_get: yes
+        name: "{{ packages }}"
+        state: present
+
+-   name: Add Docker GPG apt Key
+    apt_key:
+        url: https://download.docker.com/linux/debian/gpg
+        state: present
+
+-   name: Add docker repository to apt
+    apt_repository:
+        repo: deb https://download.docker.com/linux/debian/ buster stable
+        state: present
+
+-   name: install Docker
+    apt:
+        update_cache: yes
+        name: "{{ item }}"
+        state: latest
+    loop:
+        - docker-ce
+        - docker-ce-cli
+    # notify:
+    #     - restart docker #problem here no handlars
+
+-   name: install docker module for python
+    pip:
+      name: docker
+
+-   name: Create prod container
+    docker_container:
+        name: prod
+        image: moody94/microblog:latest
+        state: started
+        container_default_behavior: "compatibility"
+        restart: yes
+        ports:
+          - "8000:5000"
+        env:
+            SECRET_KEY: secret
+            DATABASE_URL: mysql+pymysql://microblog:secret@{{ groups.database[0] }}:3306/microblog
