@@ -1,14 +1,14 @@
 ---
-
--   name: "apt-get update and upgrade"
+-   name: Update apt-cache and upgrade
     apt:
         force_apt_get: yes
         update_cache: "True"
         cache_valid_time: 3600
         upgrade: yes
 
--   name: "install packages"
+-   name: Install packages
     apt:
+        force_apt_get: yes
         name: 
           - nginx
           - python-certbot-nginx
@@ -17,7 +17,7 @@
 -   name: Check if certificate already exists.
     stat:
         path: /etc/letsencrypt/live/{{ domain_name }}/cert.pem
-    register: letsencrypt_cert
+    register: letsencrypt_cert 
 
 -   debug: msg="{{ letsencrypt_cert.stat.exists }}"
 
@@ -26,7 +26,7 @@
     when: not letsencrypt_cert.stat.exists
 
 -   name: Generate new certificate if one doesn't exist.
-    shell: "certbot certonly --standalone --noninteractive --expand --agree-tos --email {{ admin_name }} -d {{ domain_name }} -d www.{{ domain_name }}"
+    shell: "certbot certonly --standalone --noninteractive --expand --agree-tos --email {{ admin_email }} -d {{ domain_name }} -d www.{{ domain_name }}"
     when: not letsencrypt_cert.stat.exists
 
 -   name: Remove default conf
@@ -34,26 +34,25 @@
         state: absent
         path: /etc/nginx/sites-enabled/default
 
--   name: Copy load-balancer.conf.j2 to MV
+-   name: Copy nginx.conf.j2 from local machine to loadBalancer VM's specified path
     template:
         src: ./templates/nginx.conf.j2
-        dest: /etc/nginx/sites-available/nginx.conf
+        dest: /etc/nginx/nginx.conf
 
-
--   name: Copy load-balancer.conf.j2 to MV
+-   name: Copy load-balancer.conf.j2 from local machine to loadBalancer VM's specified path
     template:
         src: ./templates/load-balancer.conf.j2
         dest: /etc/nginx/sites-available/load-balancer.conf
 
--   name: create symbolic link for loadbalancer
+
+-   name: Create symbolic link for load-balancer.conf
     file:
         state: link
         src: /etc/nginx/sites-available/load-balancer.conf
         path: /etc/nginx/sites-enabled/load-balancer.conf
 
--   name: ensure nginx is the latest version
+-   name: ensure nginx is at the latest version
     apt: name=nginx state=latest
-
 
 -   name: Start nginx
     service:

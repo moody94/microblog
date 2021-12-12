@@ -2,7 +2,7 @@
 # Here you can add variables that will be available for all hosts.
 region: northeurope
 resource_group: DIDA-MUAB19-DV1617-H21-LP2 # 
-domain_name: microblogmoody.software # 
+domain_name: moodymicroblog.tech # 
 
 root_user: azureuser
 

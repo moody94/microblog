@@ -7,7 +7,7 @@ WORKDIR /home/microblog
 COPY requirements requirements
 COPY requirements.txt microblog.py boot_test.sh ./
 
-RUN python -m venv .venv
+RUN python -m venv venv
 
 # hadolint ignore=DL3013,DL3018
 RUN apk --no-cache add --virtual build-dependencies libffi-dev openssl-dev py-pip build-base \
@@ -20,9 +20,9 @@ RUN apk --no-cache add --virtual build-dependencies libffi-dev openssl-dev py-pi
 # hadolint ignore=DL3013,DL3018
 RUN apk add --no-cache bash  make cmake
 
-RUN .venv/bin/pip3 install -r requirements.txt \
-&& .venv/bin/pip3 install -r requirements/test.txt \
-&& .venv/bin/pip3 install py pytest coverage pylint
+RUN venv/bin/pip3 install -r requirements.txt \
+&& venv/bin/pip3 install -r requirements/test.txt \
+&& venv/bin/pip3 install py pytest coverage pylint
 RUN chmod +x boot_test.sh
 
 

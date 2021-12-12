@@ -11,6 +11,6 @@ pub_ssh_key_location:
 
 dbserver_password: secret
 
-admin_name: muab19@student.bth.se
+admin_email: muab19@student.bth.se
 
-domain_name: microblogmoody.software
+domain_name: moodymicroblog.tech
