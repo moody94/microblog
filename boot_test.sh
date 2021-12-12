@@ -1,6 +1,6 @@
 #!/bin/sh
 
-source venv/bin/activate
+source .venv/bin/activate
 #make tests
 make install-test
 make test
