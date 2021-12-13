@@ -48,8 +48,8 @@
         - "3306:3306"
         env:
             MYSQL_RANDOM_ROOT_PASSWORD: "yes"
-            MYSQL_ROOT_PASSWORD: "{{ dbserver_password }}" 
-            MYSQL_PASSWORD: "{{ dbserver_password }}" 
+            MYSQL_ROOT_PASSWORD: "secret" 
+            MYSQL_PASSWORD: "secret" 
            
             MYSQL_USER: microblog
             MYSQL_DATABASE: microblog
