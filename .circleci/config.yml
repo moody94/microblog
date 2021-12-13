@@ -103,6 +103,12 @@ workflows:
           filters:
             branches:
               only: master
+      - deploy-azure:
+          requires:
+            - publish-latest
+          filters:
+            branches:
+              only: master
   build-tags:
     jobs:
       - build:
