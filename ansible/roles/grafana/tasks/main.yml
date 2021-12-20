@@ -28,13 +28,13 @@
         networks_cli_compatible: true
         network_mode: monitor
 
-# -   name: create prometheus datasource
-#     grafana_datasource:
-#         org_id: "1"
-#         name: Prometheus
-#         grafana_url: "{{ groups['monitoring'][0] }}:3000/"
-#         ds_type: "prometheus"
-#         ds_url: "{{ groups['monitoring'][0] }}:9090"
+-   name: create prometheus datasource
+    grafana_datasource:
+        org_id: "1"
+        name: Prometheus
+        grafana_url: "{{ groups['monitoring'][0] }}:3000/"
+        ds_type: "prometheus"
+        ds_url: "{{ groups['monitoring'][0] }}:9090"
 
 -   name: Creates directory in monitoring instance
     file:
@@ -47,16 +47,16 @@
         src: files/node-exporter.json
         dest: /tmp/public/node-exporter.json
 
-# -   name: Create a folder in grafana dashboard
-#     community.grafana.grafana_folder:
-#         url: "{{ groups['monitoring'][0] }}:3000/"
-#         title: "public"
-#         state: present
+-   name: Create a folder in grafana dashboard
+    community.grafana.grafana_folder:
+        url: "{{ groups['monitoring'][0] }}:3000/"
+        title: "public"
+        state: present
 
-# -   name: create Grafana node exporter dashboard
-#     grafana_dashboard:
-#         grafana_url: "{{ groups['monitoring'][0] }}:3000/"
-#         state: present
-#         folder: public
-#         overwrite: yes
-#         path: /tmp/public/node-exporter.json
+-   name: create Grafana node exporter dashboard
+    grafana_dashboard:
+        grafana_url: "{{ groups['monitoring'][0] }}:3000/"
+        state: present
+        folder: public
+        overwrite: yes
+        path: /tmp/public/node-exporter.json
