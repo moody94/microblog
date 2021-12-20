@@ -11,6 +11,7 @@ COPY app app
 COPY migrations migrations
 COPY requirements requirements
 COPY requirements.txt microblog.py boot_prod.sh ./
+COPY gunicorn_config.py gunicorn_config.py
 
 RUN python -m venv .venv
 ENV FLASK_APP microblog.py
@@ -25,6 +26,9 @@ RUN chmod +x boot_prod.sh
 
 RUN chown -R microblog:microblog ./
 USER microblog
+
+ENV prometheus_multiproc_dir /tmp
+
 # port
 EXPOSE 5000
 # comands that should run when the contianer start

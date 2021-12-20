@@ -1,5 +1,61 @@
 version: "3.9"
+
+networks:
+  monitor:
+
+volumes:
+  prometheus-data: {}
+  grafana-data: {} 
+
 services:
+  node-exporter:
+    image: prom/node-exporter:v1.2.2
+    container_name: node-exporter
+    restart: unless-stopped
+    volumes:
+      - /proc:/host/proc:ro 
+      - /sys:/host/sys:ro
+      - /:/rootfs:ro
+    command:
+      - '--path.procfs=/host/proc' 
+      - '--path.rootfs=/rootfs'
+      - '--path.sysfs=/host/sys'
+
+      - '--collector.filesystem.mount-points-exclude=^/(sys|proc|dev|host|etc)($$|/)'
+    ports: 
+      - "9100:9100"
+    networks:
+      - monitor 
+
+  prometheus:
+    image: prom/prometheus:v2.31.1
+    restart: unless-stopped
+    volumes:
+      - ./prometheus.yml:/etc/prometheus/prometheus.yml
+      - prometheus-data:/prometheus 
+
+    command:
+      - "--config.file=/etc/prometheus/prometheus.yml"
+      - "--storage.tsdb.path=/prometheus" 
+      - "--web.console.libraries=/etc/prometheus/console_libraries"
+      - "--web.console.templates=/etc/prometheus/consoles"
+      - "--storage.tsdb.retention.time=24h"
+      - "--web.enable-lifecycle" 
+    networks:
+      - monitor
+    ports:
+      - "9090:9090"
+
+  grafana:
+    image: grafana/grafana:8.2.4
+    restart: unless-stopped
+    volumes:
+      - grafana-data:/var/lib/grafana
+    networks:
+      - monitor
+    ports:
+      - "3000:3000"
+
   prod:
     build:
       context: .
@@ -24,38 +80,3 @@ services:
       DATABASE_URL: mysql+pymysql://microblog:secret@dbserver/microblog
     restart:
       "unless-stopped"
-# services:
-#   prod:
-#     image: moody94/microblog:latest
-#     container_name: "microblog"
-#     links:
-#       - dbserver
-#     ports:
-#         - "8000:5000"
-#     restart: "always"
-#     environment:
-#       MYSQL_DATABASE: microblog
-#       SECRET_KEY: secret
-#   dbserver:
-#     image: mysql:5.7
-#     container_name: "dbserver"
-#     environment:
-#       MYSQL_RANDOM_ROOT_PASSWORD: "yes"
-#       MYSQL_USER: microblog
-#       MYSQL_DATABASE: microblog
-#       MYSQL_PASSWORD: secret
-#       DATABASE_URL: mysql+pymysql://microblog:secret@dbserver/microblog
-#     restart:
-#       "unless-stopped"
-#   test:
-#     container_name: "test-prod"
-#     build:
-#       context: .
-#       dockerfile: ./docker/Dockerfile_test
-#     volumes:
-#       - .:/home/microblog
-#     restart:
-#       "unless-stopped"
-#     environment:
-#       SECRET_KEY: development
-#       DATABASE_URL: mysql+pymysql://microblog:secret@dbserver/microblog
