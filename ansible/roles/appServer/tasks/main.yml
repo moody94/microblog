@@ -40,7 +40,7 @@
 -   name: Create prod container
     docker_container:
         name: prod 
-        image: moody94/microblog:latest
+        image: moody94/microblog:flask-exporter
         state: started
         container_default_behavior: "compatibility" 
         restart_policy: always

@@ -95,7 +95,7 @@
         restart_policy: always
         state: started
         command: |
-            -nginx.scrape-uri=https://microblogonsteroids.software/metrics
+            -nginx.scrape-uri=https://moodymicroblog.tech/metrics
             -nginx.retries=10
             -nginx.ssl-verify=false
             -web.telemetry-path=/prometheus
