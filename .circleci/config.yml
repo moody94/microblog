@@ -117,13 +117,13 @@ workflows:
               only: master
       - test:
           requires:
-            - build
+            - snyk
           filters:
             branches:
               only: master
       - build:
           requires:
-            - build
+            - test
           filters:
             branches:
               only: master
