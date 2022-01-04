@@ -111,13 +111,9 @@ workflows:
   version: 2
   build-master:
     jobs:
-      - snyk:
-          filters:
-            branches:
-              only: master
+
       - test:
-          requires:
-            - snyk
+
           filters:
             branches:
               only: master
