@@ -85,7 +85,7 @@ jobs:
 
   deploy-azure:
     docker:
-      - image: circleci/python:3.7
+      - image: circleci/python:3.8
     working_directory: ~/microblog 
     steps:
       - checkout
