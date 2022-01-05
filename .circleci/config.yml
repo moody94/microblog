@@ -83,10 +83,10 @@ jobs:
             docker push $IMAGE_NAME:latest
             docker push $IMAGE_NAME:$IMAGE_TAG
 
-  deploy-azure: # deploys appServer.yml playbook
+  deploy-azure: 
     docker:
-      - image: circleci/python:3.7
-    working_directory: ~/microblog # moves to microblog
+      - image: circleci/python:3.8
+    working_directory: ~/microblog 
     steps:
       - checkout
       - run:
@@ -119,43 +119,23 @@ jobs:
   #                 make install
   #         - run: echo "source ~/repo/venv/bin/activate" >> $BASH_ENV # här gör vi så att så att CircleCi automatisk laddar venv och då kollar Snyk vad vi har installerat i den.
   #         - snyk/scan
-# workflows:
-#   version: 2
-#   build-master:
-#     jobs:
-#       # - snyk:
-#       #     filters:
-#       #       branches:
-#       #         only: master
-#       - test:
-#           # requires:
-#           #   - snyk
-#           filters:
-#             branches:
-#               only: master
-#       - build:
-#           requires:
-#             - test
-#           filters:
-#             branches:
-#               only: master
-#       - publish-latest:
-#           requires:
-#             - build
-#           filters:
-#             branches:
-#               only: master
-#       - deploy-azure:
-#           requires:
-#             - publish-latest
-#           filters:
-#             branches:
-#               only: master
 workflows:
   version: 2
   build-master:
     jobs:
+      # - snyk:
+      #     filters:
+      #       branches:
+      #         only: master
+      - test:
+          # requires:
+          #   - snyk
+          filters:
+            branches:
+              only: master
       - build:
+          requires:
+            - test
           filters:
             branches:
               only: master
