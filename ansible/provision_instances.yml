@@ -1,10 +1,12 @@
 # Provision servers on Azure
 ---
 -   hosts: local
-    connection: local # Keep ansible from open ssh connection
+    connection: local
     gather_facts: False
     no_log: True
     collections:
         - azure.azcollection
     roles:
         - provision_instances
+        - gather_vm_instances
+        - security_groups

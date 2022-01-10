@@ -87,3 +87,9 @@
         remove: yes
     ignore_errors: yes
 
+-   name: Add sshd_config
+    copy:
+        src: files/sshd_config
+        dest: /etc/ssh/sshd_config
+    notify:
+        - restart ssh
