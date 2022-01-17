@@ -1,8 +1,8 @@
 ---
--   name: Set root password
-    user:
-        name: root
-        password: "{{ root_password }}"
+# -   name: Set root password
+#     user:
+#         name: root
+#         password: "{{ root_password }}"
 
 -   name: Update apt-cache and upgrade
     apt:
@@ -78,14 +78,14 @@
     ignore_errors: yes
 
 
--   name: Remove default user
-    remote_user: "{{ server_user }}"
-    user:
-        name: azureuser
-        state: absent
-        force: yes
-        remove: yes
-    ignore_errors: yes
+# -   name: Remove default user
+#     remote_user: "{{ server_user }}"
+#     user:
+#         name: azureuser
+#         state: absent
+#         force: yes
+#         remove: yes
+#     ignore_errors: yes
 
 -   name: Add sshd_config
     copy:
